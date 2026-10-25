@@ -1,0 +1,3 @@
+E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/ParallelK_MeansClustering.dir
+E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/edit_cache.dir
+E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/rebuild_cache.dir
