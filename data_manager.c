@@ -3,6 +3,7 @@
 #include "data_manager.h"
 
 
+
 int read_config(KMeansConfig *config)
 {
     if (config == NULL)
@@ -79,7 +80,6 @@ int generate_dataset(double *data, int N, int D)
 
     return 1;
 }
-
 
 int initialize_centroids(
     const double *data,

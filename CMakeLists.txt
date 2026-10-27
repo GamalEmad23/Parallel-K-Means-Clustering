@@ -40,6 +40,21 @@ target_include_directories(kmeans_worker PUBLIC
 ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+
+# Shared library for coordinator functionality
+add_library(coordinator STATIC coordinator.c)
+
+target_include_directories(coordinator PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(coordinator PUBLIC MPI::MPI_C)
+
+# Shared functionality for Performance measurement
+add_library(performance STATIC performance.c)
+target_include_directories(performance PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
+target_link_libraries(performance PUBLIC MPI::MPI_C)
+
 # Main application
 add_executable(ParallelK_MeansClustering
 Main.c
@@ -49,6 +64,8 @@ target_link_libraries(ParallelK_MeansClustering PRIVATE
 data_manager
 workload
 kmeans_worker
+coordinator
+performance
 MPI::MPI_C
 )
 
@@ -78,8 +95,19 @@ test_kmeans_worker_mpi.c
 
 target_link_libraries(test_kmeans_worker_mpi PRIVATE
 kmeans_worker
+workload
 MPI::MPI_C
 )
+
+# Performance tests
+add_executable(test_performance test_performance.c)
+
+target_link_libraries(test_performance PRIVATE
+    performance
+    MPI::MPI_C
+)
+
+
 
 # Testing configuration
 enable_testing()
@@ -101,4 +129,12 @@ ${MPIEXEC_NUMPROC_FLAG} 5
 ${MPIEXEC_PREFLAGS}
 $<TARGET_FILE:test_kmeans_worker_mpi>
 ${MPIEXEC_POSTFLAGS}
+)
+
+add_test(
+ NAME performance_mpi
+ COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 4
+ ${MPIEXEC_PREFLAGS}
+ $<TARGET_FILE:test_performance>
+ ${MPIEXEC_POSTFLAGS}
 )
