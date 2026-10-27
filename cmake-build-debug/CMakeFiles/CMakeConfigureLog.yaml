@@ -203,3 +203,63 @@ events:
       
       
 ...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2024.1/bin/cmake/win/x64/share/cmake-3.28/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "C:/Program Files/JetBrains/CLion 2024.1/bin/cmake/win/x64/share/cmake-3.28/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "C:/Program Files/JetBrains/CLion 2024.1/bin/cmake/win/x64/share/cmake-3.28/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "CMakeLists.txt:8 (find_package)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-yfkd8d"
+      binary: "E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-yfkd8d"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-yfkd8d'
+        
+        Run Build Command(s): C:/PROGRA~1/JETBRA~1/CLION2~1.1/bin/ninja/win/x64/ninja.exe -v cmTC_adf80
+        [1/2] C:\\PROGRA~1\\JETBRA~1\\CLION2~1.1\\bin\\mingw\\bin\\gcc.exe  -isystem "C:/Program Files (x86)/Microsoft SDKs/MPI/Include" -std=gnu11 -o CMakeFiles/cmTC_adf80.dir/test_mpi.c.obj -c "E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-yfkd8d/test_mpi.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\PROGRA~1\\JETBRA~1\\CLION2~1.1\\bin\\mingw\\bin\\gcc.exe   CMakeFiles/cmTC_adf80.dir/test_mpi.c.obj -o cmTC_adf80.exe -Wl,--out-implib,libcmTC_adf80.dll.a -Wl,--major-image-version,0,--minor-image-version,0  "C:/Program Files (x86)/Microsoft SDKs/MPI/Lib/x64/msmpi.lib"  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 && cd ."
+        
+      exitCode: 0
+...
+
+---
+events:
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Program Files/JetBrains/CLion 2024.1/bin/cmake/win/x64/share/cmake-3.28/Modules/FindMPI.cmake:1278 (try_compile)"
+      - "C:/Program Files/JetBrains/CLion 2024.1/bin/cmake/win/x64/share/cmake-3.28/Modules/FindMPI.cmake:1322 (_MPI_try_staged_settings)"
+      - "C:/Program Files/JetBrains/CLion 2024.1/bin/cmake/win/x64/share/cmake-3.28/Modules/FindMPI.cmake:1645 (_MPI_check_lang_works)"
+      - "CMakeLists.txt:8 (find_package)"
+    description: "The MPI test test_mpi for C in mode normal"
+    directories:
+      source: "E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-hviq2a"
+      binary: "E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-hviq2a"
+    cmakeVariables:
+      CMAKE_C_FLAGS: ""
+      CMAKE_C_FLAGS_DEBUG: "-g"
+      CMAKE_EXE_LINKER_FLAGS: ""
+    buildResult:
+      variable: "MPI_RESULT_C_test_mpi_normal"
+      cached: true
+      stdout: |
+        Change Dir: 'E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-hviq2a'
+        
+        Run Build Command(s): "C:/Program Files/JetBrains/CLion 2024.1/bin/ninja/win/x64/ninja.exe" -v cmTC_3a2b8
+        [1/2] C:\\PROGRA~1\\JETBRA~1\\CLION2~1.1\\bin\\mingw\\bin\\gcc.exe  -isystem "C:/Program Files (x86)/Microsoft SDKs/MPI/Include" -std=gnu11 -fdiagnostics-color=always -o CMakeFiles/cmTC_3a2b8.dir/test_mpi.c.obj -c "E:/Collage/4TH first sem/Parallel Programing/ParallelK-MeansClustering/cmake-build-debug/CMakeFiles/CMakeScratch/TryCompile-hviq2a/test_mpi.c"
+        [2/2] C:\\WINDOWS\\system32\\cmd.exe /C "cd . && C:\\PROGRA~1\\JETBRA~1\\CLION2~1.1\\bin\\mingw\\bin\\gcc.exe   CMakeFiles/cmTC_3a2b8.dir/test_mpi.c.obj -o cmTC_3a2b8.exe -Wl,--out-implib,libcmTC_3a2b8.dll.a -Wl,--major-image-version,0,--minor-image-version,0  "C:/Program Files (x86)/Microsoft SDKs/MPI/Lib/x64/msmpi.lib"  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 && cd ."
+        
+      exitCode: 0
+...

@@ -1,0 +1,5 @@
+# ninja log v5
+12	217	8146568820415497	CMakeFiles/ParallelK_MeansClustering.dir/data_manager.c.obj	fe00bea3b315602
+7	2811	8146570681944828	build.ninja	f66c040ed386e054
+6	235	8146568820603241	CMakeFiles/ParallelK_MeansClustering.dir/Main.c.obj	52f2cc87f9365765
+235	483	8146568822991702	ParallelK_MeansClustering.exe	81907da64b6e075d
