@@ -4,40 +4,101 @@ project(ParallelK_MeansClustering LANGUAGES C)
 
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS OFF)
 
+# MPI configuration
 find_package(MPI REQUIRED COMPONENTS C)
-set(CMAKE_C_STANDARD_REQUIRED ON)
 
-find_package(MPI REQUIRED COMPONENTS C)
-
-add_executable(ParallelK_MeansClustering
-        Main.c
-        data_manager.c
-        data_manager.h
-        data_manager.c
-        workload.h
-        workload.c
-        kmeans_worker.h
-        kmeans_worker.c)
-
-target_link_libraries(ParallelK_MeansClustering PUBLIC MPI::MPI_C)
-
-add_executable(test_workload
-        test_workload.c
-        workload.c
-        workload.h)
-target_link_libraries(test_workload PRIVATE MPI::MPI_C)
-
-add_executable(test_kmeans_worker test_kmeans_worker.c kmeans_worker.c)
-
-add_executable(test_kmeans_worker_mpi test_kmeans_worker_mpi.c)
-target_link_libraries(test_kmeans_worker_mpi PRIVATE ParallelK_MeansClustering)
-
-enable_testing()
-add_test(NAME worker COMMAND test_kmeans_worker)
-add_test(NAME worker_mpi_empty_ranks
-        COMMAND ${MPIEXEC_EXECUTABLE} ${MPIEXEC_NUMPROC_FLAG} 5
-        ${MPIEXEC_PREFLAGS} $<TARGET_FILE:test_kmeans_worker_mpi> ${MPIEXEC_POSTFLAGS})
+# Shared library for data management
+add_library(data_manager STATIC
+data_manager.c
 )
 
-target_link_libraries(ParallelK_MeansClustering PRIVATE MPI::MPI_C)
+target_include_directories(data_manager PUBLIC
+${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+# Shared library for workload functionality
+add_library(workload STATIC
+workload.c
+)
+
+target_include_directories(workload PUBLIC
+${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+target_link_libraries(workload PUBLIC
+MPI::MPI_C
+)
+
+# Shared library for K-Means worker functionality
+add_library(kmeans_worker STATIC
+kmeans_worker.c
+)
+
+target_include_directories(kmeans_worker PUBLIC
+${CMAKE_CURRENT_SOURCE_DIR}
+)
+
+# Main application
+add_executable(ParallelK_MeansClustering
+Main.c
+)
+
+target_link_libraries(ParallelK_MeansClustering PRIVATE
+data_manager
+workload
+kmeans_worker
+MPI::MPI_C
+)
+
+# Workload tests
+add_executable(test_workload
+test_workload.c
+)
+
+target_link_libraries(test_workload PRIVATE
+workload
+MPI::MPI_C
+)
+
+# K-Means worker tests
+add_executable(test_kmeans_worker
+test_kmeans_worker.c
+)
+
+target_link_libraries(test_kmeans_worker PRIVATE
+kmeans_worker
+)
+
+# MPI K-Means worker tests
+add_executable(test_kmeans_worker_mpi
+test_kmeans_worker_mpi.c
+)
+
+target_link_libraries(test_kmeans_worker_mpi PRIVATE
+kmeans_worker
+MPI::MPI_C
+)
+
+# Testing configuration
+enable_testing()
+
+add_test(
+NAME workload
+COMMAND test_workload
+)
+
+add_test(
+NAME worker
+COMMAND test_kmeans_worker
+)
+
+add_test(
+NAME worker_mpi_empty_ranks
+COMMAND ${MPIEXEC_EXECUTABLE}
+${MPIEXEC_NUMPROC_FLAG} 5
+${MPIEXEC_PREFLAGS}
+$<TARGET_FILE:test_kmeans_worker_mpi>
+${MPIEXEC_POSTFLAGS}
+)
