@@ -46,3 +46,31 @@ Run the built test from CLion's terminal (or Windows Terminal). These cases cove
 ```
 
 Adjust `cmake-build-debug` if CLion uses a different build directory.
+
+## Member 3: Distance and cluster assignment
+
+`kmeans_worker.c` and `kmeans_worker.h` provide `assign_clusters`. Each process
+calls it after `distribute_data`, using the current centroids and its local points.
+The function compares squared Euclidean distances, stores the nearest cluster in
+`labels`, and fills local coordinate sums and point counts. Equal distances keep
+the lowest cluster index. Sums and counts are reset on every call, even when the
+process has no points. The worker makes no MPI calls; the next module can combine
+its results using MPI reductions.
+
+Arrays use the same row-major layout as the distribution module. Provide space
+for `local_N` labels, `K * D` sums and `K` counts, using separate input and output
+buffers. `K` and `D` must be positive and `local_N` nonnegative; products used for
+indexing must fit in `int`. Invalid dimensions or missing required pointers abort
+with an error message. For zero local points, data, labels and centroids may be
+`NULL`. Coordinates and squared distances must fit in finite `double` values.
+
+The standalone test needs only a C compiler:
+
+```sh
+gcc -std=c11 -Wall -Wextra -Werror -pedantic kmeans_worker.c test_kmeans_worker.c -o test_kmeans_worker
+./test_kmeans_worker
+```
+
+With MPI installed, build using CMake and run `ctest --test-dir <build-directory>
+--output-on-failure`. This also runs `test_kmeans_worker_mpi` with five processes
+and three points to check distribution, assignment and reduction with empty ranks.
