@@ -20,6 +20,8 @@ int main(int argc, char *argv[])
     if (rank == 0)
     {
         printf("=== K-Means: Member 1 Test ===\n");
+        fflush(stdout);
+
         valid = read_config(&config);
     }
 
