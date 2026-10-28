@@ -1,41 +1,50 @@
 # Member 2: Workload Distribution Using MPI
 
-This module implements Member 2's assigned task: distribute row-major `N x D` point data across MPI processes. The first `N % P` ranks receive one extra point, so the distribution also works when `N` is not divisible by the process count or there are more processes than points.
+N is the number of points, D is the number of coordinates per point,
+and world_size is the number of MPI processes.
 
-`calculate_distribution` fills `sendcounts` and `displacements` in **double elements**, as required by `MPI_Scatterv` with `MPI_DOUBLE`. `distribute_data` uses `MPI_Scatter` to give each process its point count, `MPI_Scatterv` to send the coordinates, and `MPI_Allgather` to check the per-process workload. `MPI_Scatterv` is used because the assignment specifically requires uneven data distribution.
+## Distribution
 
-The module checks that `N * D` fits the `int` counts used by `MPI_Scatterv`. The test checks command-line values with `strtol` and verifies allocation-size limits before allocating data. When a process has no points, the scatter call uses a one-value dummy buffer for its zero-count argument.
+1. Divide N by world_size to find the basic number of points per process.
+2. Give one extra point to each of the first N % world_size processes.
+3. Rank 0 calculates sendcounts and displacements in double elements.
+4. MPI_Scatterv sends each process its coordinates.
 
-## Files
+For example, 103 points and 5 processes produce counts of
+21, 21, 21, 20, 20 points. If D is 3, sendcounts contains
+63, 63, 63, 60, 60 double elements.
 
-- `workload.h` — declarations shared with the integration `main`.
-- `workload.c` — workload calculation and MPI distribution.
-- `test_workload.c` — standalone correctness check.
-- `CMakeLists.txt` — builds the project library and workload test.
-
-## Calling the module
-
-All processes call `distribute_data`. Rank 0 passes the full row-major dataset; other ranks pass `NULL` for `all_data`. Each process allocates `local_N * D` doubles for `local_data`, where:
-
-```c
-local_N = N / world_size + (rank < N % world_size ? 1 : 0);
-```
-
-Example integration:
+Each caller calculates its local_N before allocating local_data:
 
 ```c
-int local_N = N / world_size + (rank < N % world_size ? 1 : 0);
-double *local_data = malloc((size_t)local_N * D * sizeof(double));
-distribute_data(all_data, local_data, N, D, rank, world_size, MPI_COMM_WORLD);
+int local_N = N / world_size;
+if (rank < N % world_size) {
+    local_N++;
+}
 ```
 
-On rank 0, `all_data` contains `N * D` doubles. The local array can be `NULL` when `local_N` is zero.
+Rank 0 owns the full dataset. Each process owns its local buffer.
+The data is stored point by point: x0, y0, x1, y1, and so on.
+Processes with zero points use a dummy buffer for the zero-count call.
 
-## Build and run in CLion on Windows
+## Test program
 
-Open the repository root in CLion and reload the CMake project. Select a C toolchain that works with the installed Microsoft MPI SDK. The project uses `find_package(MPI COMPONENTS C)` to find and link MPI.
+Rank 0 reads N and D from the command line and sends the settings with
+MPI_Bcast. The defaults are 103 points and 3 dimensions.
+Memory is allocated at runtime. The number of processes comes from
+MPI_Comm_size and is selected with mpiexec -n.
 
-Run the built test from CLion's terminal (or Windows Terminal). These cases cover uneven division, even division, more processes than points, zero points, and a single process:
+The test generates recognizable values, checks every received coordinate,
+and combines the success flags with MPI_Allreduce and MPI_SUM.
+The size checks prevent overflowing the MPI int counts and allocation size.
+Input uses strtol and rejects empty arguments, trailing text, and values outside int range. Distribution checks rank and world_size against the supplied communicator. Allocation errors identify the rank, buffer, and requested bytes. All ranks must supply identical N and D and call the function collectively using a valid intracommunicator.
+
+## Build and run
+
+Open this folder in CLion and build the test_workload target.
+CMake needs an installed MPI runtime and development SDK.
+
+Run from the project folder after building:
 
 ```powershell
 & 'C:\Program Files\Microsoft MPI\Bin\mpiexec.exe' -n 5 .\cmake-build-debug\test_workload.exe 103 3
@@ -45,7 +54,7 @@ Run the built test from CLion's terminal (or Windows Terminal). These cases cove
 & 'C:\Program Files\Microsoft MPI\Bin\mpiexec.exe' -n 1 .\cmake-build-debug\test_workload.exe 103 3
 ```
 
-Adjust `cmake-build-debug` if CLion uses a different build directory.
+Adjust the build directory if your CLion profile uses a different one.
 
 ## Member 3: Distance and cluster assignment
 
