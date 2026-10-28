@@ -1,0 +1,80 @@
+Start testing: Oct 28 00:04 Egypt Daylight Time
+----------------------------------------------------------
+1/4 Testing: workload
+1/4 Test: workload
+Command: "E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/test_workload.exe"
+Directory: E:/Parallel Project/Parallel-K-Means-Clustering/build-member5
+"workload" start time: Oct 28 00:04 Egypt Daylight Time
+Output:
+----------------------------------------------------------
+PASS: N=103 points, D=3, processes=1; every point arrived once in order.
+<end of output>
+Test time =   0.04 sec
+----------------------------------------------------------
+Test Passed.
+"workload" end time: Oct 28 00:04 Egypt Daylight Time
+"workload" time elapsed: 00:00:00
+----------------------------------------------------------
+
+2/4 Testing: worker
+2/4 Test: worker
+Command: "E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/test_kmeans_worker.exe"
+Directory: E:/Parallel Project/Parallel-K-Means-Clustering/build-member5
+"worker" start time: Oct 28 00:04 Egypt Daylight Time
+Output:
+----------------------------------------------------------
+PASS: 2D, 3D, nearest centroid, labels, sums, counts, repeated calls, empty data, ties and K=1.
+<end of output>
+Test time =   0.02 sec
+----------------------------------------------------------
+Test Passed.
+"worker" end time: Oct 28 00:04 Egypt Daylight Time
+"worker" time elapsed: 00:00:00
+----------------------------------------------------------
+
+3/4 Testing: worker_mpi_empty_ranks
+3/4 Test: worker_mpi_empty_ranks
+Command: "C:/Program Files/Microsoft MPI/Bin/mpiexec.exe" "-n" "5" "E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/test_kmeans_worker_mpi.exe"
+Directory: E:/Parallel Project/Parallel-K-Means-Clustering/build-member5
+"worker_mpi_empty_ranks" start time: Oct 28 00:04 Egypt Daylight Time
+Output:
+----------------------------------------------------------
+PASS: worker after distribution, N=3, processes=5.
+<end of output>
+Test time =   0.17 sec
+----------------------------------------------------------
+Test Passed.
+"worker_mpi_empty_ranks" end time: Oct 28 00:04 Egypt Daylight Time
+"worker_mpi_empty_ranks" time elapsed: 00:00:00
+----------------------------------------------------------
+
+4/4 Testing: performance_mpi
+4/4 Test: performance_mpi
+Command: "C:/Program Files/Microsoft MPI/Bin/mpiexec.exe" "-n" "4" "E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/test_performance.exe"
+Directory: E:/Parallel Project/Parallel-K-Means-Clustering/build-member5
+"performance_mpi" start time: Oct 28 00:04 Egypt Daylight Time
+Output:
+----------------------------------------------------------
+
+--- Per-process timing results ---
+Rank 0 local elapsed: 0.042137 seconds
+Rank 1 local elapsed: 0.042520 seconds
+Rank 2 local elapsed: 0.042528 seconds
+Rank 3 local elapsed: 0.044368 seconds
+
+Maximum parallel elapsed time: 0.044368 seconds
+Slowest process: Rank 3
+
+--- Performance metrics tests ---
+Speedup: 2.00 (expected 2.00)
+Efficiency: 100.00% (expected 100.00%)
+Performance metrics tests passed.
+<end of output>
+Test time =   0.18 sec
+----------------------------------------------------------
+Test Passed.
+"performance_mpi" end time: Oct 28 00:04 Egypt Daylight Time
+"performance_mpi" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 28 00:04 Egypt Daylight Time

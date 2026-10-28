@@ -1,0 +1,13 @@
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/data_manager.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/workload.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/kmeans_worker.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/coordinator.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/performance.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/ParallelK_MeansClustering.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/test_workload.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/test_kmeans_worker.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/test_kmeans_worker_mpi.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/test_performance.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/test.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/edit_cache.dir
+E:/Parallel Project/Parallel-K-Means-Clustering/build-member5/CMakeFiles/rebuild_cache.dir
